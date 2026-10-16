@@ -17,6 +17,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
     steps:
       - name: checkout
         uses: actions/checkout@v5
@@ -31,6 +33,15 @@ jobs:
         run: npm ci
 
       - name: build
+        env:
+          VITE_API_BASE: ${{ vars.VITE_API_BASE }}
+          VITE_API_PATH: ${{ vars.VITE_API_PATH }}
+          VITE_FULL_TITLE: ${{ vars.VITE_FULL_TITLE }}
+          VITE_USERNAME: ${{ vars.VITE_USERNAME }}
+          VITE_GH_PAGES_BASE_URL: ${{ vars.VITE_GH_PAGES_BASE_URL }}
+          VITE_REPO: ${{ vars.VITE_REPO }}
+          VITE_OG_IMAGE: ${{ vars.VITE_OG_IMAGE }}
+          VITE_FAVICON: ${{ vars.VITE_FAVICON }}
         run: npm run build
 
       - name: upload pages artifact
